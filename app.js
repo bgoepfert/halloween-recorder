@@ -28,6 +28,14 @@ document
             secretAccessKey: data.privateKey,
             region: "ap-southeast-2",
           });
+          AWS.config.credentials.get((err) => {
+            if (err) {
+              console.error("Credentials refresh error:", err);
+            } else {
+              console.log("Credentials refreshed successfully");
+              s3 = new AWS.S3(); // Instantiate S3 after confirming credentials are refreshed
+            }
+          });
           s3 = new AWS.S3();
         } else {
           alert("Authentication failed!");
