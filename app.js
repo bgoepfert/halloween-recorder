@@ -1,3 +1,5 @@
+let s3 = null;
+
 document
   .getElementById("authForm")
   .addEventListener("submit", async function (event) {
@@ -21,12 +23,12 @@ document
       if (response.ok) {
         const data = await response.json();
         if (data.success) {
-          console.log("key:", data.privateKey);
           AWS.config.update({
             accessKeyId: "AKIAVWABJOKM3E6SMR6K",
             secretAccessKey: data.privateKey,
             region: "ap-southeast-2",
           });
+          s3 = new AWS.S3();
         } else {
           alert("Authentication failed!");
         }
@@ -40,7 +42,6 @@ document
     }
   });
 
-const s3 = new AWS.S3();
 const bucketName = "cloud-record-halloween";
 let uploadId = null;
 let partNumber = 1;
